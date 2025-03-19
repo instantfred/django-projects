@@ -1,0 +1,20 @@
+{% extends 'foodie/base.html' %}
+
+{% block body %}
+<form method="POST">
+    <!--
+        The {% csrf_token %} tag is a Django template tag used to include a CSRF 
+        (Cross-Site Request Forgery) token in forms that submit data via POST requests.
+        This token is a security measure to protect your application from CSRF attacks,
+        where malicious websites could trick users into submitting unauthorized requests
+        to your server.
+        When you include {% csrf_token %} inside a form, Django generates a unique token
+        for the user's session and embeds it as a hidden input field in the form.
+        The server then validates this token when the form is submitted to ensure the
+        request is legitimate and originated from your application. 
+    -->
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
