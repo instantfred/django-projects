@@ -14,7 +14,10 @@
         <div class="navbar">
             <a class="nav-item nav-link text-primary mx-3" href="{% url 'foodie:create_item' %}">Add Item</a>
             <a class="nav-item nav-link text-primary mx-3" href="#">Delete Item</a>
-            <a class="nav-item nav-link text-primary mx-3" href="#">View Item</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-item nav-link text-primary mx-3">Logout</button>
+            </form>
         </div>
     </nav>  
     {% if messages %}

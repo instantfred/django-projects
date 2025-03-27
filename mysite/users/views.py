@@ -1,6 +1,8 @@
-from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.shortcuts import redirect, render
+
 from users.forms import RegisterForm
+
 
 def register(request):
     if request.method == 'POST':
@@ -9,7 +11,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}')
-            return redirect('foodie:index')
+            return redirect('login')
     else:
         form = RegisterForm()
     return render(request, 'users/register.html', {'form': form})
