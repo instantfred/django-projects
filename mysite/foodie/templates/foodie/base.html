@@ -14,10 +14,15 @@
         <div class="navbar">
             <a class="nav-item nav-link text-primary mx-3" href="{% url 'foodie:create_item' %}">Add Item</a>
             <a class="nav-item nav-link text-primary mx-3" href="#">Delete Item</a>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit" class="nav-item nav-link text-primary mx-3">Logout</button>
-            </form>
+            {% if user.is_authenticated %}
+            <a class="nav-item nav-link text-primary mx-3" href="{% url 'profile' %}">Profile</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-item nav-link text-primary mx-3">Logout</button>
+                </form>
+            {% else %}
+                <a class="nav-item nav-link text-primary mx-3" href="{% url 'login' %}">Login</a>
+            {% endif %}
         </div>
     </nav>  
     {% if messages %}
