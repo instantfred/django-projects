@@ -1,20 +1,92 @@
 {% extends 'foodie/base.html' %}
 
 {% block body %}
-<form method="POST">
-    <!--
-        The {% csrf_token %} tag is a Django template tag used to include a CSRF 
-        (Cross-Site Request Forgery) token in forms that submit data via POST requests.
-        This token is a security measure to protect your application from CSRF attacks,
-        where malicious websites could trick users into submitting unauthorized requests
-        to your server.
-        When you include {% csrf_token %} inside a form, Django generates a unique token
-        for the user's session and embeds it as a hidden input field in the form.
-        The server then validates this token when the form is submitted to ensure the
-        request is legitimate and originated from your application. 
-    -->
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Submit</button>
-</form>
+<!--
+    The {% csrf_token %} tag is a Django template tag used to include a CSRF 
+    (Cross-Site Request Forgery) token in forms that submit data via POST requests.
+    This token is a security measure to protect your application from CSRF attacks,
+    where malicious websites could trick users into submitting unauthorized requests
+    to your server.
+    When you include {% csrf_token %} inside a form, Django generates a unique token
+    for the user's session and embeds it as a hidden input field in the form.
+    The server then validates this token when the form is submitted to ensure the
+    request is legitimate and originated from your application. 
+-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header {% if item %}bg-warning{% else %}bg-primary{% endif %} text-white">
+                    <h3 class="mb-0">
+                        <i class="fas {% if item %}fa-edit{% else %}fa-plus-circle{% endif %} me-2"></i>
+                        {% if item %}Edit Item{% else %}Add New Item{% endif %}
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.item_name.id_for_label }}" class="form-label">Item Name</label>
+                            {{ form.item_name }}
+                            {% if form.item_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.item_name.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.item_description.id_for_label }}" class="form-label">Description</label>
+                            {{ form.item_description }}
+                            {% if form.item_description.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.item_description.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.item_price.id_for_label }}" class="form-label">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.item_price }}
+                            </div>
+                            {% if form.item_price.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.item_price.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.item_image.id_for_label }}" class="form-label">Item Image</label>
+                            {{ form.item_image }}
+                            {% if form.item_image.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.item_image.errors }}
+                                </div>
+                            {% endif %}
+                            {% if item and item.item_image %}
+                                <div class="mt-2">
+                                    <small class="text-muted">Current image:</small>
+                                    <img src="{{ item.item_image.url }}" class="img-thumbnail mt-2" alt="Current item image">
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% if item %}{% url 'foodie:details' item.id %}{% else %}{% url 'foodie:index' %}{% endif %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back
+                            </a>
+                            <button type="submit" class="btn {% if item %}btn-warning{% else %}btn-primary{% endif %}">
+                                <i class="fas fa-save me-2"></i>{% if item %}Update{% else %}Save{% endif %} Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

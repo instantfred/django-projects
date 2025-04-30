@@ -1,6 +1,68 @@
-<form method="POST">
-    {% csrf_token %}
-    <h2>Login</h2>
-    {{ form }}
-    <input type="submit" value="Login" />
-</form>
+{% extends 'foodie/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Username</label>
+                            <div class="input-group {% if form.username.errors %}is-invalid{% endif %}">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" name="username" class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                                       id="id_username" value="{{ form.username.value|default:'' }}" required>
+                            </div>
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.username.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-4">
+                            <label for="id_password" class="form-label">Password</label>
+                            <div class="input-group {% if form.password.errors %}is-invalid{% endif %}">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
+                                       id="id_password" required>
+                            </div>
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.password.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login
+                            </button>
+                        </div>
+                    </form>
+                    <div class="mt-4 text-center">
+                        <p class="mb-0">Don't have an account? <a href="{% url 'register' %}" class="text-primary">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
