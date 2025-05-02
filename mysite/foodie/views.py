@@ -67,6 +67,7 @@ def delete_item(request, item_id):
     item = Item.objects.get(id=item_id)
     if request.method == 'POST':
         item.delete()
+        messages.success(request, f'Item "{item.item_name}" has been deleted successfully.')
         return redirect('foodie:index')
     
-    return render(request, 'foodie/item-delete.html', {'item': item})
+    return redirect('foodie:details', pk=item_id)
