@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.views.generic.base import TemplateView
+
 
 from users.forms import RegisterForm
 
@@ -25,3 +27,7 @@ def profile(request):
         'profile': request.user.profile
     }
     return render(request, 'users/profile.html', context)
+
+
+class RootView(TemplateView):
+    template_name = 'users/root.html'

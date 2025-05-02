@@ -1,0 +1,51 @@
+{% extends "foodie/base.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Welcome to Foodie</h1>
+                    <p class="text-center mb-4">Your one-stop destination for all things food!</p>
+                    
+                    <div class="list-group">
+                        <h3 class="mb-3">Food Items</h3>
+                        <a href="{% url 'foodie:index' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-list me-2"></i>View All Items
+                        </a>
+                        <a href="{% url 'foodie:create_item' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-plus-circle me-2"></i>Add New Item
+                        </a>
+                        
+                        <h3 class="mt-4 mb-3">User Management</h3>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-user me-2"></i>View Profile
+                            </a>
+                            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="list-group-item list-group-item-action w-100 text-start">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login
+                            </a>
+                            <a href="{% url 'register' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-user-plus me-2"></i>Register
+                            </a>
+                        {% endif %}
+                        
+                        <h3 class="mt-4 mb-3">Admin</h3>
+                        <a href="{% url 'admin:index' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-cog me-2"></i>Admin Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %} 

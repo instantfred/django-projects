@@ -23,7 +23,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("", include("foodie.urls")),
+    path("", user_views.RootView.as_view(), name="root"),
     path("admin/", admin.site.urls),
     path("foodie/", include("foodie.urls")),
     path("register/", user_views.register, name="register"),
