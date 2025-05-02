@@ -1,1 +1,20 @@
-<h1>You have been logged out!</h1>
+{% extends "foodie/base.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">You have been logged out</h2>
+                    <p class="card-text">Thank you for using our service. We hope to see you again soon!</p>
+                    <div class="mt-4">
+                        <a href="{% url 'login' %}" class="btn btn-primary me-2">Log In Again</a>
+                        <a href="{% url 'foodie:index' %}" class="btn btn-outline-secondary">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
