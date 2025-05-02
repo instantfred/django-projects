@@ -6,7 +6,7 @@ from django.contrib import messages
 from .forms import ItemForm
 from .models import Item
 from django.views.generic.list import ListView
-
+from django.views.generic.detail import DetailView
 # function view not being used anymore, is commented out in the urls.py file
 # but is kept here for reference
 def index(request):
@@ -34,6 +34,10 @@ def details(request, item_id):
         'item': item,
     }
     return render(request, 'foodie/details.html', context)
+
+class DetailsClassView(DetailView):
+    model = Item
+    template_name = 'foodie/details.html'
 
 
 @login_required(login_url='/login/')
