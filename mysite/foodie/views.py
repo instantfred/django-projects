@@ -5,7 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import ItemForm
 from .models import Item
+from django.views.generic.list import ListView
 
+# function view not being used anymore, is commented out in the urls.py file
+# but is kept here for reference
 def index(request):
     item_list = Item.objects.all()
 
@@ -15,6 +18,11 @@ def index(request):
     }
     return render(request, 'foodie/index.html', context)
 
+
+class IndexClassView(ListView):
+    model = Item
+    template_name = 'foodie/index.html'
+    context_object_name = 'item_list'
 
 def item(request):
     return HttpResponse('<h1>This is an item</h1>')
