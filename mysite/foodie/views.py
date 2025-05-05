@@ -7,8 +7,10 @@ from .forms import ItemForm
 from .models import Item
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 # function view not being used anymore, is commented out in the urls.py file
 # but is kept here for reference
+
 def index(request):
     item_list = Item.objects.all()
 
@@ -48,6 +50,16 @@ def create_item(request):
         return redirect('foodie:index')
     
     return render(request, 'foodie/item-form.html', {'form': form})
+
+
+class CreateItemClassView(CreateView):
+    model = Item
+    fields = ['item_name', 'item_description', 'item_price', 'item_image']
+    template_name = 'foodie/item-form.html'
+
+    def form_valid(self, form):
+        form.instance.user_name = self.request.user
+        return super().form_valid(form)
 
 
 @login_required(login_url='/login/')

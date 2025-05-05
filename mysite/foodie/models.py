@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -24,3 +25,6 @@ class Item(models.Model):
     item_description = models.CharField(max_length=200)
     item_price = models.IntegerField()
     item_image = models.CharField(max_length=500, default="https://metropizza.com.au/wp-content/uploads/2023/06/food-placeholder.jpeg")
+
+    def get_absolute_url(self):
+        return reverse("foodie:details", kwargs={"pk": self.pk})
